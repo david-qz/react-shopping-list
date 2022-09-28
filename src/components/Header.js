@@ -6,12 +6,12 @@ import { signOut } from '../services/auth';
 
 export default function Header() {
   const [isActive, setIsActive] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const handleLogout = async () => {
     try {
       await signOut();
-      // TODO -- set the user to null after logout
+      setUser(null);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e.message);
