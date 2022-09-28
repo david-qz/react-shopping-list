@@ -1,21 +1,26 @@
-import { NavLink, Redirect } from 'react-router-dom';
+import { NavLink, Redirect, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import './Auth.css';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../context/UserContext';
+import { authUser } from '../../services/auth';
 
 export default function Auth() {
   const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { type } = useParams();
 
   if (user) {
     return <Redirect to="/items" />;
   }
 
   const submitAuth = async () => {
-    // TODO
+    const user = await authUser(email, password, type);
+    if (user) {
+      setUser(user);
+    }
   };
 
   return (
